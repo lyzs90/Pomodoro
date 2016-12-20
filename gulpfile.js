@@ -1,12 +1,26 @@
 var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
-var pkg = require('./package.json');
+var browserSync = require('browser-sync')
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var webpackConfig = require('./webpack.config.js');
+
+var compiler = webpack(webpackConfig);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
     browserSync.init({
         server: {
-            baseDir: 'www'
+            baseDir: 'www',
+            middleware: [
+                webpackDevMiddleware(compiler, {
+                    publicPath: '/',
+                    stats: {
+                        colors: true,
+                    },
+                }),
+                webpackHotMiddleware(compiler)
+            ]
         },
     })
 })
