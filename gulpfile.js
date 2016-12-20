@@ -14,20 +14,28 @@ gulp.task('browserSync', function() {
             baseDir: 'www',
             middleware: [
                 webpackDevMiddleware(compiler, {
+                    hot: true,
+                    filename: 'bundle.js',
                     publicPath: '/',
                     stats: {
                         colors: true,
                     },
+                    historyApiFallback: true,
                 }),
-                webpackHotMiddleware(compiler)
+                webpackHotMiddleware(compiler, {
+                    log: console.log,
+                    path: '/__webpack_hmr',
+                    heartbeat: 10 * 1000,
+                })
             ]
         },
+        files: [
+            'css/**/*.css',
+            'www/**/*.html'
+        ]
     })
 })
 
 // Default task with browserSync
 gulp.task('default', ['browserSync'], function() {
-    // Reloads the browser whenever HTML or JS files change
-    gulp.watch('www/**/*.html', browserSync.reload);
-    gulp.watch('src/**/*.js', browserSync.reload);
 });
