@@ -30,7 +30,7 @@ gulp.task('browserSync', function() {
             ]
         },
         files: [
-            'css/**/*.css',
+            'www/**/*.css',
             'www/**/*.html'
         ]
     })
