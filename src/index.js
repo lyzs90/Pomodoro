@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Counter from './components/Counter';
+import Pomodoro from './components/Pomodoro';
 
-ReactDOM.render(<Counter />, document.getElementById('header'));
+ReactDOM.render(<Pomodoro />, document.getElementById('root'));
