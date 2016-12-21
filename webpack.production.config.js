@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var config = {
     context: path.join(__dirname, 'src'),
@@ -9,7 +10,7 @@ var config = {
         './index.js',
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist/js'),
         filename: 'bundle.js',
     },
     plugins: [
@@ -17,6 +18,10 @@ var config = {
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
+        }),
+        new CleanWebpackPlugin(['dist'], {
+            root: process.cwd(),
+            exclude: ['index.html', 'main.css']
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.CommonsChunkPlugin('common.js'),

@@ -9,7 +9,7 @@ var config = {
         './index.js',
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist/js'),
         filename: 'bundle.js',
     },
     plugins: [

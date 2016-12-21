@@ -1,27 +1,35 @@
 import React from 'react';
 
-/**
-* A counter button: tap the button to increase the count.
-**/
-class Counter extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            count: 0,
-        };
-    }
+// PRESENTATIONAL COMPONENT: a simple stateless React View
+const Button = ({onClick, label}) => (
+  <button onClick={onClick}>{label}</button>
+);
 
-    render() {
-        return (
-            <button
-                onClick={() => {
-                    this.setState({ count: this.state.count + 1 });
-                }}
-            >
-            Count: {this.state.count}
-            </button>
-        );
+// REACT COMPONENT: a stateful React View (stored in this.state)
+// Normally you'd want so other Model to store state (i.e. Redux)
+class Counter extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: 0
     }
+  }
+  // CONTROLLERS: update state based on user input
+  increment() {
+    this.setState({value: this.state.value + 1});
+  }
+  decrement() {
+    this.setState({value: this.state.value - 1});
+  }
+  render() {
+    return (
+      <div className="counter">
+        <Button onClick={this.increment.bind(this)} label={'+'}/>
+        <p id="count">{this.state.value}</p>
+        <Button onClick={this.decrement.bind(this)} label={'-'}/>
+      </div>
+    );
+  }
 }
 
 export default Counter;

@@ -16,7 +16,7 @@ gulp.task('browserSync', function() {
                 webpackDevMiddleware(compiler, {
                     hot: true,
                     filename: 'bundle.js',
-                    publicPath: '/',
+                    publicPath: '/js/',
                     stats: {
                         colors: true,
                     },
