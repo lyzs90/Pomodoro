@@ -7,7 +7,7 @@ var webpackConfig = require('./webpack.config.js');
 var app = express();
 var compiler = webpack(webpackConfig);
 
-app.use(express.static(__dirname + '/www'));
+app.use(express.static(__dirname + '/dist'));
 
 app.use(webpackDevMiddleware(compiler, {
     hot: true,

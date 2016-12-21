@@ -11,7 +11,7 @@ var compiler = webpack(webpackConfig);
 gulp.task('browserSync', function() {
     browserSync.init({
         server: {
-            baseDir: 'www',
+            baseDir: 'dist',
             middleware: [
                 webpackDevMiddleware(compiler, {
                     hot: true,
@@ -30,8 +30,8 @@ gulp.task('browserSync', function() {
             ]
         },
         files: [
-            'www/**/*.css',
-            'www/**/*.html'
+            'dist/**/*.css',
+            'dist/**/*.html'
         ]
     })
 })
