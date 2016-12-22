@@ -7,11 +7,9 @@ var webpackStream = require('webpack-stream');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 
-// Configure the clean task
-gulp.task('clean', function () {
-    return gulp.src('dist/**/*', {read: false})
-        .pipe(clean());
-});
+//=============================================================================
+// Development
+//=============================================================================
 
 // Copy all static assets
 gulp.task('copy', function() {
@@ -52,24 +50,43 @@ gulp.task('browserSync', ['watch'], function() {
             ]
         },
         files: [
-            'src/**/*.js',
             'src/**/*.css',
             'src/**/*.html'
         ]
     });
 });
 
+// Main Dev Task
+gulp.task('dev', ['browserSync'], function() {
+});
+
+//=============================================================================
+// Production
+//=============================================================================
+
+// Configure the clean task
+gulp.task('clean', function () {
+    return gulp.src('dist/**/*', {read: false})
+        .pipe(clean());
+});
+
+// Copy all static assets
+gulp.task('prod-copy', ['clean'], function() {
+
+    gulp.src('src/css/**/*.css')
+        .pipe(gulp.dest('dist/css'));
+
+    gulp.src('src/*.+(html|json)')
+        .pipe(gulp.dest('dist'));
+});
+
 // Configure the build task
-gulp.task('build', ['copy'], function() {
+gulp.task('build', ['prod-copy'], function() {
     return gulp.src('src/index.js')
         .pipe(webpackStream( require('./webpack.production.config.js') ))
         .pipe(gulp.dest('dist/js'));
 });
 
-// Dev Task
-gulp.task('dev', ['browserSync'], function() {
-});
-
-// Prod Task
+// Main Prod Task
 gulp.task('prod', ['build'], function() {
 });
