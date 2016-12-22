@@ -1,4 +1,7 @@
+'use strict';
+
 var gulp = require('gulp');
+var sass = require('gulp-sass');
 var watch = require('gulp-watch');
 var clean = require('gulp-clean');
 var browserSync = require('browser-sync');
@@ -11,19 +14,23 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 // Development
 //=============================================================================
 
+// Configure gulp sass task
+gulp.task('sass', function() {
+    return gulp.src('src/sass/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('dist/css'));
+});
+
 // Copy all static assets
 gulp.task('copy', function() {
-
-    gulp.src('src/css/**/*.css')
-        .pipe(gulp.dest('dist/css'));
-
     gulp.src('src/*.+(html|json)')
         .pipe(gulp.dest('dist'));
 });
 
 // Configure gulp watch task
 gulp.task('watch', ['copy'], function() {
-    gulp.watch('src/**/*.+(js|css|html)', ['copy']);
+    gulp.watch('src/**/*.+(html|json)', ['copy']);
+    gulp.watch('src/sass/**/*.scss', ['sass']);
 });
 
 // Configure the browserSync task
@@ -72,16 +79,12 @@ gulp.task('clean', function () {
 
 // Copy all static assets
 gulp.task('prod-copy', ['clean'], function() {
-
-    gulp.src('src/css/**/*.css')
-        .pipe(gulp.dest('dist/css'));
-
     gulp.src('src/*.+(html|json)')
         .pipe(gulp.dest('dist'));
 });
 
 // Configure the build task
-gulp.task('build', ['prod-copy'], function() {
+gulp.task('build', ['prod-copy', 'sass'], function() {
     return gulp.src('src/index.js')
         .pipe(webpackStream( require('./webpack.production.config.js') ))
         .pipe(gulp.dest('dist/js'));
