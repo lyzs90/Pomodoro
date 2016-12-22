@@ -27,6 +27,7 @@ export default class Pomodoro extends React.Component {
   }
   // CONTROLLERS: update state based on user input
     componentDidMount() {
+        console.log('Component Did Mount.');
         Notification.requestPermission();
     }
 
@@ -57,6 +58,15 @@ export default class Pomodoro extends React.Component {
               if (this.state.mode == "normal") {
                     // everytime the timer ends naturally, increment checkmarks and write to DOM
                     this.state.checkmarks += ' \u2713';
+
+                    // send alert
+                    console.log('Alert Sent.');
+                    let notification = new Notification("Awesome, you may now go for a short breather.", {
+                        icon: "",
+                        lang: "en",
+                        body: "Go get that cuppa."
+                    });
+
                     this.setState({
                     // cooldown is 5min
                     mode: "cooldown",
@@ -66,6 +76,15 @@ export default class Pomodoro extends React.Component {
                 // stop timer
                 clearInterval(this.state.countdownID);
                 document.body.style.background = "#" + this.state.color;
+
+                // send alert
+                console.log('Alert Sent.');
+                let notification = new Notification("Your break is up!", {
+                    icon: "",
+                    lang: "en",
+                    body: "Keep pushing on~"
+                });
+
                 this.setState({
                     // switch back to normal 25min mode
                     mode: "normal",
@@ -106,16 +125,6 @@ export default class Pomodoro extends React.Component {
             message: "Try not to get distracted again",
             display: ['', 'hide', 'hide']
         });
-    }
-
-    alert() {
-        if (this.state.bigTime === 0) {
-            let notification = new Notification("Your break is up!", {
-                icon: "",
-                lang: "en",
-                body: "Keep pushing on~"
-            });
-        }
     }
 
     render() {
