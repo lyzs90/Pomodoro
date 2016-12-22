@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var watch = require('gulp-watch');
 var clean = require('gulp-clean');
 var browserSync = require('browser-sync');
 var webpack = require('webpack');
@@ -13,7 +14,7 @@ gulp.task('clean', function () {
 });
 
 // Copy all static assets
-gulp.task('copy', ['clean'], function() {
+gulp.task('copy', function() {
 
     gulp.src('src/css/**/*.css')
         .pipe(gulp.dest('dist/css'));
@@ -22,8 +23,13 @@ gulp.task('copy', ['clean'], function() {
         .pipe(gulp.dest('dist'));
 });
 
+// Configure gulp watch task
+gulp.task('watch', ['copy'], function() {
+    gulp.watch('src/**/*.+(js|css|html)', ['copy']);
+});
+
 // Configure the browserSync task
-gulp.task('browserSync', ['copy'], function() {
+gulp.task('browserSync', ['watch'], function() {
     var compiler = webpack( require('./webpack.config.js') );
     browserSync.init({
         server: {
@@ -46,8 +52,9 @@ gulp.task('browserSync', ['copy'], function() {
             ]
         },
         files: [
-            'dist/**/*.css',
-            'dist/**/*.html'
+            'src/**/*.js',
+            'src/**/*.css',
+            'src/**/*.html'
         ]
     });
 });

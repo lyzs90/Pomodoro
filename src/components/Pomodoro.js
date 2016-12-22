@@ -1,4 +1,5 @@
 import React from 'react';
+import GithubCorner from 'react-github-corner';
 import shadeColor from '../libs/shadeColor';
 
 // PRESENTATIONAL COMPONENT: a simple stateless React View
@@ -8,7 +9,7 @@ const Button = ({onClick, btnClass, label}) => (
 
 // REACT COMPONENT: a stateful React View (stored in this.state)
 // Normally you'd want so other Model to store state (i.e. Redux)
-class Pomodoro extends React.Component {
+export default class Pomodoro extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -25,9 +26,12 @@ class Pomodoro extends React.Component {
     };
   }
   // CONTROLLERS: update state based on user input
-  start() {
-    this.setState({
-        countdownID: setInterval(() => {
+    componentDidMount() {
+        Notification.requestPermission();
+    }
+
+    start() {
+        let count = setInterval(() => {
             // calculate the minutes and seconds from bigTime
             this.state.mins = Math.floor(this.state.bigTime / 60);
             this.state.secs = this.state.bigTime - this.state.mins * 60;
@@ -45,82 +49,95 @@ class Pomodoro extends React.Component {
 
             // change the message at 20
             if (this.state.mins == 20) {
-              this.state.message = "Stay focused";
+              this.setState({message: "Stay focused"});
             }
 
             // switch modes if timer ends
             if (this.state.bigTime == 0) {
               if (this.state.mode == "normal") {
-
-                // cooldown is 5min
-                this.state.mode = "cooldown";
-                this.state.bigTime = 300;
-
-                // everytime the timer ends naturally, increment checkmarks and write to DOM
-                this.state.checkmarks += '&nbsp;&#10004;';
-
+                    // everytime the timer ends naturally, increment checkmarks and write to DOM
+                    this.state.checkmarks += ' \u2713';
+                    this.setState({
+                    // cooldown is 5min
+                    mode: "cooldown",
+                    bigTime: 300
+                });
               } else if (this.state.mode == "cooldown") {
-
-                // switch back to normal 25min mode
-                this.state.mode = "normal";
-                this.state.bigTime = 1500;
-                document.body.style.background = "#" + this.state.color;
-
-                // show start button
-                this.state.display = ['', 'hide', 'hide'];
-
                 // stop timer
                 clearInterval(this.state.countdownID);
+                document.body.style.background = "#" + this.state.color;
+                this.setState({
+                    // switch back to normal 25min mode
+                    mode: "normal",
+                    bigTime: 1500,
+                    // show start button
+                    display: ['', 'hide', 'hide']
+                });
               }
 
             } else {
               // decrement
-              this.state.bigTime = this.state.bigTime - 1;
+              this.setState({bigTime: this.state.bigTime - 1});
             }
-        }, 10),
-        message: "Slow and steady wins something",
-        display: ['hide', '', 'hide']
-    });
-  }
-  stop() {
-    // stop timer
-    clearInterval(this.state.countdownID);
-    this.setState({
-        message: "Why are you such a quitter",
-        display: ['hide', 'hide', '']
-    });
-  }
-  reset() {
-    this.setState({
-        // reset clock
-        bigTime: 1500,
-        mins: '25',
-        secs: '00',
-        message: "Try not to get distracted again",
-        display: ['', 'hide', 'hide']
-    });
-  }
-  render() {
-    return (
-        <div>
-            <div id="header">
-                <span id="message">{this.state.message}</span>
-                <span id="checkmarks">{this.state.checkmarks}</span>
-            </div>
-            <div id="timer">
-                <span id="minutes">{this.state.mins}</span>
-                <span id="middle">:</span>
-                <span id="seconds">{this.state.secs}</span>
-            </div>
-            <div id="buttons">
-                <Button onClick={this.start.bind(this)} btnClass={this.state.display[0]} label={'Start'}/>
-                <Button onClick={this.stop.bind(this)}  btnClass={this.state.display[1]} label={'Stop'}/>
-                <Button onClick={this.reset.bind(this)}  btnClass={this.state.display[2]} label={'Reset'}/>
-            </div>
-            <div id="test">{'#' + this.state.color}</div>
-        </div>
-    );
-  }
-}
+        }, 10);
 
-export default Pomodoro;
+        this.setState({
+            countdownID: count,
+            message: "Slow and steady wins something",
+            display: ['hide', '', 'hide']
+        });
+    }
+
+    stop() {
+        // stop timer
+        clearInterval(this.state.countdownID);
+        this.setState({
+            message: "Why are you such a quitter",
+            display: ['hide', 'hide', '']
+        });
+    }
+
+    reset() {
+        this.setState({
+            // reset clock
+            bigTime: 1500,
+            mins: '25',
+            secs: '00',
+            message: "Try not to get distracted again",
+            display: ['', 'hide', 'hide']
+        });
+    }
+
+    alert() {
+        if (this.state.bigTime === 0) {
+            let notification = new Notification("Your break is up!", {
+                icon: "",
+                lang: "en",
+                body: "Keep pushing on~"
+            });
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <GithubCorner href="https://github.com/lyzs90/Pomodoro" bannerColor="#fff" octoColor="#0D5B85" />
+                <div id="header">
+                    <span id="message">{this.state.message}</span>
+                    <span id="checkmarks">{this.state.checkmarks}</span>
+                </div>
+                <div id="timer">
+                    <span id="minutes">{this.state.mins}</span>
+                    <span id="middle">:</span>
+                    <span id="seconds">{this.state.secs}</span>
+                </div>
+                <div id="buttons">
+                    <Button onClick={this.start.bind(this)} btnClass={this.state.display[0]} label={'Start'}/>
+                    <Button onClick={this.stop.bind(this)}  btnClass={this.state.display[1]} label={'Stop'}/>
+                    <Button onClick={this.reset.bind(this)}  btnClass={this.state.display[2]} label={'Reset'}/>
+                </div>
+                <div id="test">{'#' + this.state.color}</div>
+            </div>
+        );
+    }
+}

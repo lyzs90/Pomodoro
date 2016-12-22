@@ -14,7 +14,7 @@ body       { background:#0D5B85; font-family:"Open Sans"; font-weight:400; paddi
 
 #message    { color:#DDD; font-size:50px; margin-bottom:20px; }
 
-#checkmarks { color:#000; font-size:50px; margin-bottom:20px; }
+#checkmarks { color:#DDD; font-size:50px; margin-bottom:20px; }
 
 #timer     { color:#DDD; font-size:200px; margin-bottom:40px; }
 
