@@ -1,14 +1,30 @@
 var gulp = require('gulp');
-var browserSync = require('browser-sync')
+var clean = require('gulp-clean');
+var browserSync = require('browser-sync');
 var webpack = require('webpack');
+var webpackStream = require('webpack-stream');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
-var webpackConfig = require('./webpack.config.js');
 
-var compiler = webpack(webpackConfig);
+// Configure the clean task
+gulp.task('clean', function () {
+    return gulp.src('dist/**/*', {read: false})
+        .pipe(clean());
+});
+
+// Copy all static assets
+gulp.task('copy', ['clean'], function() {
+
+    gulp.src('src/css/**/*.css')
+        .pipe(gulp.dest('dist/css'));
+
+    gulp.src('src/*.html')
+        .pipe(gulp.dest('dist'));
+});
 
 // Configure the browserSync task
-gulp.task('browserSync', function() {
+gulp.task('browserSync', ['copy'], function() {
+    var compiler = webpack( require('./webpack.config.js') );
     browserSync.init({
         server: {
             baseDir: 'dist',
@@ -33,9 +49,20 @@ gulp.task('browserSync', function() {
             'dist/**/*.css',
             'dist/**/*.html'
         ]
-    })
-})
+    });
+});
 
-// Default task with browserSync
-gulp.task('default', ['browserSync'], function() {
+// Configure the build task
+gulp.task('build', ['copy'], function() {
+    return gulp.src('src/index.js')
+        .pipe(webpackStream( require('./webpack.production.config.js') ))
+        .pipe(gulp.dest('dist/js'));
+});
+
+// Dev Task
+gulp.task('dev', ['browserSync'], function() {
+});
+
+// Prod Task
+gulp.task('prod', ['build'], function() {
 });

@@ -8,7 +8,7 @@ Trying out different implementations of the pomodoro timer. Note that this is a 
 
 ## Getting Started
 - Run using Express & Webpack: `npm start`
-- Run using Gulp, Browser-sync & Webpack: `gulp`
+- Run using Gulp, Browser-sync & Webpack: `gulp dev`
 
 ## For Production
-- Run Webpack with PROD settings: `npm run build`
+- Run Webpack with PROD settings: `gulp prod`

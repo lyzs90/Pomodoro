@@ -1,5 +1,4 @@
 import React from 'react';
-//import counter from '../libs/counter';
 import shadeColor from '../libs/shadeColor';
 
 // PRESENTATIONAL COMPONENT: a simple stateless React View
