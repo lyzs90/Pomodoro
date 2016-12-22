@@ -11,3 +11,4 @@ Trying out different implementations of the pomodoro timer. Note that this is a 
 
 ## For Production
 - Run Express, Gulp & Webpack with PROD settings: `npm build`
+- Then push to Heroku `git push heroku master`
