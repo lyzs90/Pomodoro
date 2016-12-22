@@ -1,6 +1,7 @@
-# Pomodoro
+# [Pomodoro](https://pomodoro-react.herokuapp.com/)
 
-Trying out different implementations of the pomodoro timer. Note that this is a scaled down timer to facilitate testing i.e. in seconds instead of minutes. Switch branches to view each of them.
+Trying out different implementations of the pomodoro timer. Switch branches to view each of them.
+This branch contains the React implementation.
 
 ## What's Available
 - Vanilla JS MVC
