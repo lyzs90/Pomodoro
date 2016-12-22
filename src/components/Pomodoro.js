@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import GithubCorner from 'react-github-corner';
 import shadeColor from '../libs/shadeColor';

@@ -5,7 +5,6 @@ var config = {
     context: path.join(__dirname, 'src'),
     devtool: 'cheap-module-source-map',
     entry: [
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
         './index.js',
     ],
     output: {
@@ -19,7 +18,6 @@ var config = {
             }
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.CommonsChunkPlugin('common.js'),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
@@ -33,7 +31,7 @@ var config = {
             {
                 test: /(\.js|\.jsx)$/,
                 exclude: /(node_modules|bower_components)/,
-                loaders: ['react-hot', 'babel'],
+                loaders: ['babel'],
             },
         ],
     },
