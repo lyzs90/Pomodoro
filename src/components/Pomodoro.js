@@ -19,8 +19,8 @@ export default class Pomodoro extends React.Component {
         secs: '00',
         message: 'Let\'s get started',
         checkmarks: '',
-        color: '0D5B85',
-        bigTime: 1500,  // time in seconds
+        color: '028482',
+        bigTime: 1500,
         mode: 'normal',
         percent: 0,
         countdownID: '',
@@ -100,7 +100,7 @@ export default class Pomodoro extends React.Component {
               // decrement
               this.setState({bigTime: this.state.bigTime - 1});
             }
-        }, 10);
+        }, 1000); // 1000ms is 1 second
 
         this.setState({
             countdownID: count,
@@ -132,7 +132,7 @@ export default class Pomodoro extends React.Component {
     render() {
         return (
             <div>
-                <GithubCorner href="https://github.com/lyzs90/Pomodoro" bannerColor="#fff" octoColor="#0D5B85" />
+                <GithubCorner href="https://github.com/lyzs90/Pomodoro" bannerColor="#fff" octoColor="#028482" />
                 <div id="header">
                     <span id="message">{this.state.message}</span>
                     <span id="checkmarks">{this.state.checkmarks}</span>

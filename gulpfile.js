@@ -83,8 +83,15 @@ gulp.task('prod-copy', ['clean'], function() {
         .pipe(gulp.dest('dist'));
 });
 
+// Configure gulp sass task
+gulp.task('prod-sass', ['prod-copy'], function() {
+    return gulp.src('src/sass/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('dist/css'));
+});
+
 // Configure the build task
-gulp.task('build', ['prod-copy', 'sass'], function() {
+gulp.task('build', ['prod-sass'], function() {
     return gulp.src('src/index.js')
         .pipe(webpackStream( require('./webpack.production.config.js') ))
         .pipe(gulp.dest('dist/js'));
