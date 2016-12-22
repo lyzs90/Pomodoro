@@ -23,7 +23,7 @@ class Pomodoro extends React.Component {
         percent: 0,
         countdownID: '',
         display: ['', 'hide', 'hide']
-    }
+    };
   }
   // CONTROLLERS: update state based on user input
   start() {

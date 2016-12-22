@@ -20,8 +20,8 @@ var config = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /(\.js|\.jsx)$/,
+                exclude: /(node_modules|bower_components)/,
                 loaders: ['react-hot', 'babel'],
             },
         ],
