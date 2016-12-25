@@ -100,7 +100,7 @@ export default class Pomodoro extends React.Component {
               // decrement
               this.setState({bigTime: this.state.bigTime - 1});
             }
-        }, 1000); // 1000ms is 1 second
+        }, 1); // 1000ms is 1 second
 
         this.setState({
             countdownID: count,
