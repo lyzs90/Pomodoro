@@ -1,6 +1,7 @@
 # Pomodoro
 
-Trying out different implementations of the pomodoro timer. Note that this is a scaled down timer to facilitate testing i.e. in seconds instead of minutes. Switch branches to view each of them.
+Trying out different implementations of the pomodoro timer. Switch branches to view each of them. Note that the timer is accelerated to facilitate testing.
+This branch contains the Vanilla JS implementation.
 
 ## What's Available
 - Vanilla JS MVC
