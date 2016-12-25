@@ -134,13 +134,13 @@ export default class Pomodoro extends React.Component {
             <div>
                 <GithubCorner href="https://github.com/lyzs90/Pomodoro" bannerColor="#fff" octoColor="#028482" />
                 <div id="header">
-                    <span id="message">{this.state.message}</span>
-                    <span id="checkmarks">{this.state.checkmarks}</span>
+                    <span>{this.state.message}</span>
+                    <span>{this.state.checkmarks}</span>
                 </div>
                 <div id="timer">
-                    <span id="minutes">{this.state.mins}</span>
-                    <span id="middle">:</span>
-                    <span id="seconds">{this.state.secs}</span>
+                    <span>{this.state.mins}</span>
+                    <span>:</span>
+                    <span>{this.state.secs}</span>
                 </div>
                 <div id="buttons">
                     <Button onClick={this.start.bind(this)} btnClass={this.state.display[0]} label={'Start'}/>

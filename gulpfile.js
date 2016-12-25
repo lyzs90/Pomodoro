@@ -57,7 +57,7 @@ gulp.task('browserSync', ['watch'], function() {
             ]
         },
         files: [
-            'src/**/*.css',
+            'src/**/*.scss',
             'src/**/*.html'
         ]
     });

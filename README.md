@@ -7,9 +7,9 @@ This branch contains the React implementation.
 - Vanilla JS MVC
 - React.js (declarative views)
 
-## Getting Started
+## For Development
 - Run using Gulp, Browser-sync & Webpack: `gulp dev`. Changes to html/css will be reloaded live and hot module reloading is for the js.
 
 ## For Production
-- Run Express, Gulp & Webpack with PROD settings: `npm build`
+- Run Express, Gulp & Webpack with PROD settings: `npm start`. Verify at `localhost:3000`
 - Then push to Heroku `git push heroku master`
