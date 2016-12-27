@@ -30,7 +30,12 @@
 	<body>
 		<div id="root"></div>
     	<footer>
-			<script type="text/javascript" src="./js/bundle.js"></script>
+			<!-- @if NODE_ENV='development' -->
+			<script src='./bundle.js'></script>
+			<!-- @endif -->
+			<!-- @if NODE_ENV='production' -->
+			<script src='./js/bundle.js' async></script>
+			<!-- @endif -->
     	</footer>
 	</body>
 </html>

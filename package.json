@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --config ./webpack.production.config.js --progress && node server.js",
-    "build": "gulp prod && webpack --config ./webpack.production.config.js --progress",
+    "build": "gulp prod",
+    "local": "webpack --config ./webpack.production.config.js --progress && start http://localhost:3000 && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "lyzs90",
@@ -25,6 +26,7 @@
     "browser-sync": "^2.18.5",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-preprocess": "^2.0.0",
     "gulp-sass": "^3.0.0",
     "gulp-watch": "^4.3.11",
     "include-media": "^1.4.9",

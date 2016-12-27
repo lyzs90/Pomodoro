@@ -11,5 +11,6 @@ This branch contains the React implementation.
 - Run using Gulp, Browser-sync & Webpack: `gulp dev`. Changes to html/css will be reloaded live and hot module reloading is for the js.
 
 ## For Production
-- Run Express, Gulp & Webpack with PROD settings: `npm start`. Verify at `localhost:3000`
+- Preprocess html and compile sass: `npm run build`
+- Run Express & Webpack with PROD settings: `npm run local`. Verify.
 - Then push to Heroku `git push heroku master`
