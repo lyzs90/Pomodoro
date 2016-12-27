@@ -2,6 +2,7 @@
 
 import React from 'react';
 import GithubCorner from 'react-github-corner';
+import timeToString from '../libs/timeToString';
 import shadeColor from '../libs/shadeColor';
 
 // PRESENTATIONAL COMPONENT: a simple stateless React View
@@ -36,19 +37,14 @@ export default class Pomodoro extends React.Component {
     start() {
         let count = setInterval(() => {
             // calculate the minutes and seconds from bigTime
-            this.state.mins = Math.floor(this.state.bigTime / 60);
-            this.state.secs = this.state.bigTime - this.state.mins * 60;
-
-            // change the HTML to show new minutes and seconds
-            this.state.mins = (this.state.mins < 10 ? '0' : '') + this.state.mins;
-            this.state.secs = (this.state.secs < 10 ? '0' : '') + this.state.secs;
+            let tempMins = Math.floor(this.state.bigTime / 60);
+            let tempSecs = this.state.bigTime - this.state.mins * 60;
 
             // handle the animations
-              let divisor = 300;
-
-              this.state.percent = this.state.secs / divisor;
-              this.state.color = shadeColor(this.state.color, -this.state.percent);
-              document.body.style.background = "#" + this.state.color;
+            let divisor = 300;
+            let tempPercent = tempSecs / divisor;
+            let tempColor = this.state.color;
+            document.body.style.background = "#" + this.state.color;
 
             // change the message at 20
             if (this.state.mins == 20) {
@@ -56,11 +52,8 @@ export default class Pomodoro extends React.Component {
             }
 
             // switch modes if timer ends
-            if (this.state.bigTime == 0) {
+            if (this.state.bigTime == -1) {
               if (this.state.mode == "normal") {
-                    // everytime the timer ends naturally, increment checkmarks and write to DOM
-                    this.state.checkmarks += ' \u2713';
-
                     // send alert
                     console.log('Alert Sent.');
                     let notification = new Notification("Awesome, you may now go for a short breather.", {
@@ -72,7 +65,9 @@ export default class Pomodoro extends React.Component {
                     this.setState({
                     // cooldown is 5min
                     mode: "cooldown",
-                    bigTime: 300
+                    bigTime: 300,
+                    // everytime the timer ends naturally, increment checkmarks and write to DOM
+                    checkmarks: this.state.checkmarks.concat(' \u2713')
                 });
               } else if (this.state.mode == "cooldown") {
                 // stop timer
@@ -98,7 +93,13 @@ export default class Pomodoro extends React.Component {
 
             } else {
               // decrement
-              this.setState({bigTime: this.state.bigTime - 1});
+              this.setState({
+                  bigTime: this.state.bigTime - 1,
+                  mins: timeToString(tempMins),
+                  secs: timeToString(tempSecs),
+                  percent: tempPercent,
+                  color: shadeColor(tempColor, -tempPercent)
+              });
             }
         }, 1); // 1000ms is 1 second
 
