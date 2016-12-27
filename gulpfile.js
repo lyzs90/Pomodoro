@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var watch = require('gulp-watch');
 var clean = require('gulp-clean');
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync').create();
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 var webpackDevMiddleware = require('webpack-dev-middleware');
@@ -14,27 +14,23 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 // Development
 //=============================================================================
 
-// Configure gulp sass task
+// Compile sass + auto-inject into browser
 gulp.task('sass', function() {
-    return gulp.src('src/sass/**/*.scss')
+    return gulp.src('src/scss/**/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('dist/css'))
+        .pipe(browserSync.stream());
 });
 
-// Copy all static assets
+// Copy static assets to dist folder + auto-inject into browser
 gulp.task('copy', function() {
     gulp.src('src/*.+(html|json)')
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'))
+        .pipe(browserSync.stream());
 });
 
-// Configure gulp watch task
-gulp.task('watch', ['copy'], function() {
-    gulp.watch('src/**/*.+(html|json)', ['copy']);
-    gulp.watch('src/sass/**/*.scss', ['sass']);
-});
-
-// Configure the browserSync task
-gulp.task('browserSync', ['watch'], function() {
+// Static server + watch scss/html files
+gulp.task('browserSync', ['sass', 'copy'], function() {
     var compiler = webpack( require('./webpack.config.js') );
     browserSync.init({
         server: {
@@ -55,12 +51,11 @@ gulp.task('browserSync', ['watch'], function() {
                     heartbeat: 10 * 1000,
                 })
             ]
-        },
-        files: [
-            'src/**/*.scss',
-            'src/**/*.html'
-        ]
+        }
     });
+    // Use gulp to watch for changes
+    gulp.watch('src/scss/**/*.scss', ['sass']);
+    gulp.watch('src/**/*.+(html|json)', ['copy']);
 });
 
 // Main Dev Task
