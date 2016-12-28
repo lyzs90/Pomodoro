@@ -13,4 +13,4 @@ This branch contains the React implementation.
 ## For Production
 - Preprocess html and compile sass: `npm run build`
 - Run Express & Webpack with PROD settings: `npm run local`. Verify.
-- Then push to Heroku `git push heroku master`
+- Then commit & push to Heroku

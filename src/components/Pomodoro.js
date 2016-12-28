@@ -41,10 +41,9 @@ export default class Pomodoro extends React.Component {
             let tempSecs = this.state.bigTime - this.state.mins * 60;
 
             // handle the animations
-            let divisor = 300;
-            let tempPercent = tempSecs / divisor;
-            let tempColor = this.state.color;
-            document.body.style.background = "#" + this.state.color;
+            let tempPercent = tempSecs / 295; // doesn't work if more than 295
+            let tempColor = shadeColor(this.state.color, -tempPercent);
+            document.body.style.background = "#" + tempColor;
 
             // change the message at 20
             if (this.state.mins == 20) {
@@ -72,7 +71,7 @@ export default class Pomodoro extends React.Component {
               } else if (this.state.mode == "cooldown") {
                 // stop timer
                 clearInterval(this.state.countdownID);
-                document.body.style.background = "#" + this.state.color;
+                document.body.style.background = "#" + tempColor;
 
                 // send alert
                 console.log('Alert Sent.');
@@ -98,7 +97,7 @@ export default class Pomodoro extends React.Component {
                   mins: timeToString(tempMins),
                   secs: timeToString(tempSecs),
                   percent: tempPercent,
-                  color: shadeColor(tempColor, -tempPercent)
+                  color: tempColor
               });
             }
         }, 1); // 1000ms is 1 second
