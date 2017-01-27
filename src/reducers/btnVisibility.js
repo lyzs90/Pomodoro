@@ -1,5 +1,7 @@
 'use strict';
 
+import deepEqual from 'deep-equal';
+
 const btnVisiblity = (state = ['', 'hide', 'hide'], action) => {
     switch (action.type) {
         case 'CHANGE_BUTTON':

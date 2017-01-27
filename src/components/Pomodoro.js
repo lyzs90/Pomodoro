@@ -87,7 +87,7 @@ export default class Pomodoro extends React.Component {
                   color: tempColor
               });
             }
-        }, 1); // 1000ms is 1 second
+        }, 1000); // 1000ms is 1 second
 
         this.setState({
             countdownID: count,
