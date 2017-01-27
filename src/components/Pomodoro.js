@@ -2,16 +2,9 @@
 
 import React from 'react';
 import GithubCorner from 'react-github-corner';
-import timeToString from '../libs/timeToString';
-import shadeColor from '../libs/shadeColor';
+import { timeToString, shadeColor } from '../libs/utils';
+import { Button } from './Button';
 
-// PRESENTATIONAL COMPONENT: a simple stateless React View
-const Button = ({onClick, btnClass, label}) => (
-  <button onClick={onClick} className={btnClass}>{label}</button>
-);
-
-// REACT COMPONENT: a stateful React View (stored in this.state)
-// Normally you'd want so other Model to store state (i.e. Redux)
 export default class Pomodoro extends React.Component {
   constructor() {
     super();
@@ -21,24 +14,23 @@ export default class Pomodoro extends React.Component {
         message: 'Let\'s get started',
         checkmarks: '',
         color: '028482',
-        bigTime: 1500,
         mode: 'normal',
         percent: 0,
-        countdownID: '',
-        display: ['', 'hide', 'hide']
+        countdownID: ''
     };
   }
-  // CONTROLLERS: update state based on user input
+
     componentDidMount() {
         console.log('Component Did Mount.');
         Notification.requestPermission();
     }
 
     start() {
+        this.props.changeButton();
         let count = setInterval(() => {
             // calculate the minutes and seconds from bigTime
-            let tempMins = Math.floor(this.state.bigTime / 60);
-            let tempSecs = this.state.bigTime - this.state.mins * 60;
+            let tempMins = Math.floor(this.props.bigTime / 60);
+            let tempSecs = this.props.bigTime - this.state.mins * 60;
 
             // handle the animations
             let tempPercent = tempSecs / 295; // doesn't work if more than 295
@@ -51,20 +43,18 @@ export default class Pomodoro extends React.Component {
             }
 
             // switch modes if timer ends
-            if (this.state.bigTime == -1) {
+            if (this.props.bigTime == -1) {
               if (this.state.mode == "normal") {
                     // send alert
-                    console.log('Alert Sent.');
                     let notification = new Notification("Awesome, you may now go for a short breather.", {
                         icon: "",
                         lang: "en",
                         body: "Go get that cuppa."
                     });
-
+                    this.props.cooldown();
                     this.setState({
                     // cooldown is 5min
                     mode: "cooldown",
-                    bigTime: 300,
                     // everytime the timer ends naturally, increment checkmarks and write to DOM
                     checkmarks: this.state.checkmarks.concat(' \u2713')
                 });
@@ -80,20 +70,17 @@ export default class Pomodoro extends React.Component {
                     lang: "en",
                     body: "Keep pushing on~"
                 });
-
+                this.props.resetTimer();
                 this.setState({
                     // switch back to normal 25min mode
-                    mode: "normal",
-                    bigTime: 1500,
-                    // show start button
-                    display: ['', 'hide', 'hide']
+                    mode: "normal"
                 });
               }
 
             } else {
               // decrement
+              this.props.countdown();
               this.setState({
-                  bigTime: this.state.bigTime - 1,
                   mins: timeToString(tempMins),
                   secs: timeToString(tempSecs),
                   percent: tempPercent,
@@ -104,28 +91,27 @@ export default class Pomodoro extends React.Component {
 
         this.setState({
             countdownID: count,
-            message: "Slow and steady wins something",
-            display: ['hide', '', 'hide']
+            message: "Slow and steady wins something"
         });
     }
 
     stop() {
         // stop timer
         clearInterval(this.state.countdownID);
+        this.props.changeButton();
         this.setState({
-            message: "Why are you such a quitter",
-            display: ['hide', 'hide', '']
+            message: "Why are you such a quitter"
         });
     }
 
     reset() {
+        this.props.resetTimer();
+        this.props.changeButton();
         this.setState({
             // reset clock
-            bigTime: 1500,
             mins: '25',
             secs: '00',
-            message: "Try not to get distracted again",
-            display: ['', 'hide', 'hide']
+            message: "Try not to get distracted again"
         });
     }
 
@@ -143,11 +129,10 @@ export default class Pomodoro extends React.Component {
                     <span>{this.state.secs}</span>
                 </div>
                 <div id="buttons">
-                    <Button onClick={this.start.bind(this)} btnClass={this.state.display[0]} label={'Start'}/>
-                    <Button onClick={this.stop.bind(this)}  btnClass={this.state.display[1]} label={'Stop'}/>
-                    <Button onClick={this.reset.bind(this)}  btnClass={this.state.display[2]} label={'Reset'}/>
+                    <Button onClick={this.start.bind(this)} btnClass={this.props.btnVisiblity[0]} label={'Start'}/>
+                    <Button onClick={this.stop.bind(this)}  btnClass={this.props.btnVisiblity[1]} label={'Stop'}/>
+                    <Button onClick={this.reset.bind(this)}  btnClass={this.props.btnVisiblity[2]} label={'Reset'}/>
                 </div>
-                <div id="test">{'#' + this.state.color}</div>
             </div>
         );
     }
