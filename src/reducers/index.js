@@ -2,40 +2,16 @@
 
 import { combineReducers } from 'redux';
 import deepEqual from 'deep-equal';
-
-const bigTime = (state = 1500, action) => {
-    switch (action.type) {
-        case 'COUNTDOWN':
-            return state - 1;
-        case 'COOLDOWN':
-            return 300;
-        case 'RESET_TIMER':
-            return 1500;
-        default:
-            return state;
-    }
-};
-
-const btnVisiblity = (state = ['', 'hide', 'hide'], action) => {
-    switch (action.type) {
-        case 'CHANGE_BUTTON':
-            if (deepEqual(state, ['', 'hide', 'hide'])) {
-                return ['hide', '', 'hide'];
-            }
-            if (deepEqual(state, ['hide', '', 'hide'])) {
-                return ['hide', 'hide', ''];
-            }
-            if (deepEqual(state, ['hide', 'hide', ''])) {
-                return ['', 'hide', 'hide'];
-            }
-        default:
-            return state;
-    }
-};
+import bigTime from './bigTime';
+import btnVisiblity from './btnVisibility';
+import todos from './todos';
+import visibilityFilter from './visibilityFilter';
 
 const rootReducer = combineReducers({
     bigTime,
-    btnVisiblity
+    btnVisiblity,
+    todos,
+    visibilityFilter
 });
 
 export default rootReducer;

@@ -54,3 +54,23 @@ body {
 .hide {
     display: none;
 }
+
+#todoInput {
+    margin-top: 20px;
+    input {
+        border-radius: 5px;
+    }
+    button {
+        margin-left: 10px;
+        border-radius: 5px;
+    }
+}
+
+#todo {
+    list-style: none;
+    font-size: 20px;
+}
+
+#todo:hover {
+    opacity: 0.8;
+}

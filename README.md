@@ -5,7 +5,8 @@ This branch contains the React implementation.
 
 ## What's Available
 - Vanilla JS MVC
-- React.js (declarative views)
+- React
+- React-Redux
 
 ## For Development
 - Run using Gulp, Browser-sync & Webpack: `gulp dev`. Changes to html/css will be reloaded live and hot module reloading is for the js.
