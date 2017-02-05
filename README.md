@@ -10,8 +10,3 @@ This branch contains the Redux implementation.
 
 ## For Development
 - Run using Gulp, Browser-sync & Webpack: `gulp dev`. Changes to html/css will be reloaded live and hot module reloading is for the js.
-
-## For Production
-- Preprocess html and compile sass: `npm run build`
-- Run Express & Webpack with PROD settings: `npm run local`. Verify.
-- Then commit & push to Heroku
