@@ -1,0 +1,11 @@
+{
+  // Place your settings in this file to overwrite the default settings
+  "editor.tabSize": 2,
+  "workbench.colorTheme": "Default Light+",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.minimap.enabled": true,
+  "editor.wordWrapColumn": 80,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.renderControlCharacters": false,
+  "editor.formatOnSave": false
+}

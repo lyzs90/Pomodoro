@@ -5,6 +5,9 @@ import GithubCorner from 'react-github-corner';
 import { timeToString, shadeColor } from '../libs/utils';
 import { Button } from './Button';
 
+// 1000ms is 1 second
+const interval = process.env.NODE_ENV === 'development' ? 10 : 1000;
+
 export default class Pomodoro extends React.Component {
   constructor() {
     super();
@@ -87,7 +90,7 @@ export default class Pomodoro extends React.Component {
                   color: tempColor
               });
             }
-        }, 1000); // 1000ms is 1 second
+        }, interval);
 
         this.setState({
             countdownID: count,
