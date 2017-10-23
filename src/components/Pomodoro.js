@@ -2,7 +2,7 @@
 
 import React from 'react';
 import GithubCorner from 'react-github-corner';
-import { timeToString, shadeColor } from '../libs/utils';
+import { timeToString } from '../libs/utils';
 import { Button } from './Button';
 
 // 1000ms is 1 second
@@ -16,16 +16,18 @@ export default class Pomodoro extends React.Component {
         secs: '00',
         message: 'Let\'s get started',
         checkmarks: '',
-        color: '028482',
         mode: 'normal',
-        percent: 0,
         countdownID: ''
     };
   }
 
     componentDidMount() {
-        console.log('Component Did Mount.');
         Notification.requestPermission();
+        this.props.fetchImage('the-road-less-travelled');
+    }
+
+    componentWillReceiveProps(nextProps) {
+        document.body.style.backgroundImage = `url('${nextProps.bgImage}')`;
     }
 
     start() {
@@ -34,11 +36,6 @@ export default class Pomodoro extends React.Component {
             // calculate the minutes and seconds from bigTime
             let tempMins = Math.floor(this.props.bigTime / 60);
             let tempSecs = this.props.bigTime - this.state.mins * 60;
-
-            // handle the animations
-            let tempPercent = tempSecs / 295; // doesn't work if more than 295
-            let tempColor = shadeColor(this.state.color, -tempPercent);
-            document.body.style.background = "#" + tempColor;
 
             // change the message at 20
             if (this.state.mins == 20) {
@@ -64,7 +61,6 @@ export default class Pomodoro extends React.Component {
               } else if (this.state.mode == "cooldown") {
                 // stop timer
                 clearInterval(this.state.countdownID);
-                document.body.style.background = "#" + tempColor;
 
                 // send alert
                 console.log('Alert Sent.');
@@ -86,8 +82,6 @@ export default class Pomodoro extends React.Component {
               this.setState({
                   mins: timeToString(tempMins),
                   secs: timeToString(tempSecs),
-                  percent: tempPercent,
-                  color: tempColor
               });
             }
         }, interval);

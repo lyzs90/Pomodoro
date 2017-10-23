@@ -3,11 +3,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Pomodoro from '../components/Pomodoro';
-import { countdown, cooldown, resetTimer, changeButton } from '../actions';
+import { countdown, cooldown, resetTimer, changeButton, fetchBackgroundImage } from '../actions';
 
 const mapStateToProps = (state) => ({
     bigTime: state.bigTime,
-    btnVisiblity: state.btnVisiblity
+    btnVisiblity: state.btnVisiblity,
+    bgImage: state.bgImage
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -22,6 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     changeButton: () => {
         dispatch(changeButton());
+    },
+    fetchImage: (collection) => {
+        dispatch({type: 'FETCH_IMAGE_REQUESTED', payload: {collection}})
     }
 });
 

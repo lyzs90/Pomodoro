@@ -13,6 +13,8 @@
   "dependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-2": "^6.22.0",
@@ -24,17 +26,18 @@
     "gulp-preprocess": "^2.0.0",
     "gulp-sass": "^3.0.0",
     "gulp-watch": "^4.3.11",
-    "react-hot-loader": "^1.3.1",
     "include-media": "^1.4.9",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-github-corner": "^0.3.0",
+    "react-hot-loader": "^1.3.1",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
+    "redux-saga": "^0.16.0",
     "webpack": "^1.14.0",
-    "webpack-stream": "^3.2.0",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.13.2",
-    "webpack-module-hot-accept": "^1.0.4"
+    "webpack-module-hot-accept": "^1.0.4",
+    "webpack-stream": "^3.2.0"
   }
 }
