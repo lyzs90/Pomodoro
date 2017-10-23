@@ -1,5 +1,7 @@
 # [Pomodoro](https://pomodoro-react.herokuapp.com/)
 
+<img src="./screenshot.PNG" width="800">
+
 Trying out different implementations of the pomodoro timer. Switch branches to view each of them. Note that the timer is accelerated to facilitate testing.
 This branch contains the Redux implementation.
 
