@@ -1,25 +1,41 @@
 $primaryColor: #fff;
+$accent: rgba(15, 15, 15, 0.825);
 
 @import "node_modules/include-media/dist/_include-media.scss";
 @import url("//fonts.googleapis.com/css?family=Open+Sans:400,700,600");
 
 body {
     background: $primaryColor;
-    font-family: "Open Sans";
+    font-family: "Helvetica Neue";
     font-weight: 400;
     padding-top: 30px;
     text-align: center;
+    overflow-y: hidden;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.self-end {
+    align-self: flex-end;
+    margin-right: 5%;
+}
+
+h1, h2, h3, h4, h5, span, p, a, li {
+    color: $primaryColor;
 }
 
 #header {
+    margin-top: 5%;
+
     span {
-        color: #DDD;
         font-size: 30px;
         margin-bottom: 20px;
     }
     @include media(">tablet") {
         span {
-            color: #DDD;
             font-size: 50px;
             margin-bottom: 20px;
         }
@@ -28,13 +44,11 @@ body {
 
 #timer {
     span {
-        color: #DDD;
         font-size: 100px;
         margin-bottom: 40px;
     }
     @include media(">tablet") {
         span {
-            color: #DDD;
             font-size: 200px;
             margin-bottom: 40px;
         }
@@ -42,9 +56,9 @@ body {
 }
 
 #buttons button {
-    background: darken($primaryColor, 15%);
+    background: $accent;
     border: none;
-    color: #DDD;
+    color: $primaryColor;
     cursor: pointer;
     padding: 15px 30px;
     margin: 0 auto;
@@ -56,12 +70,19 @@ body {
 }
 
 #todoInput {
-    margin-top: 20px;
+    margin-top: 5%;
     input {
         border-radius: 5px;
+        padding: 5px;
+        min-width: 200px;
     }
     button {
+        background: $accent;
+        border: none;
+        color: $primaryColor;
+        padding: 5px 10px;
         margin-left: 10px;
+        margin-top: 10px;
         border-radius: 5px;
     }
 }

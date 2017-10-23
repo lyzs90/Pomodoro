@@ -1,5 +1,11 @@
+let url;
+
+if (process.env.NODE_ENV === 'production') {
+    url = `https://api.unsplash.com/photos/random/?collections=${collection}&client_id=${UNSPLASH_CLIENT_ID}`;
+}
+
 export const getImage = (collection) => {
-  return fetch(`https://api.unsplash.com/photos/random/?collections=${collection}&client_id=bb1476fb6a53f4d59e6bf868591a6fb0bcdfb0d5171c58c6b13d09ccfbf5effa`, {
+  return fetch(url, {
       method: 'GET',
       mode: 'cors',  // no-cors by default
       headers: new Headers({
@@ -8,4 +14,8 @@ export const getImage = (collection) => {
   })
     .then((response) => response.json())
     .then((image) => image.urls.full)
+    .catch(err => {
+        // fallback api (only works in browser)
+        return `https://source.unsplash.com/collection/410546/1600x900`;
+    })
 }

@@ -115,7 +115,7 @@ export default class Pomodoro extends React.Component {
     render() {
         return (
             <div>
-                <GithubCorner href="https://github.com/lyzs90/Pomodoro" bannerColor="#fff" octoColor="#028482" />
+                <GithubCorner href="https://github.com/lyzs90/Pomodoro" bannerColor="rgba(15, 15, 15, 0.825)" octoColor="#fff" />
                 <div id="header">
                     <span>{this.state.message}</span>
                     <span>{this.state.checkmarks}</span>

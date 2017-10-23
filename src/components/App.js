@@ -8,11 +8,13 @@ import Footer from './Footer';
 
 const App = () => {
     return (
-        <div>
+        <div className="flex">
             <Pomodoro />
-            <AddTodo />
-            <VisibleTodoList />
-            <Footer />
+            <div className="self-end">
+                <AddTodo/>
+                <VisibleTodoList />
+                <Footer />
+            </div>
         </div>
     );
 };
